@@ -1,0 +1,42 @@
+Top 5 Best-Selling Pizzas
+SELECT pizza_name, SUM(quantity) AS total_sold
+FROM order_details
+JOIN pizzas ON order_details.pizza_id = pizzas.pizza_id
+GROUP BY pizza_name
+ORDER BY total_sold DESC
+LIMIT 5;
+
+Total Revenue by Pizza Category
+SELECT category, ROUND(SUM(quantity * price), 2) AS total_revenue
+FROM order_details
+JOIN pizzas ON order_details.pizza_id = pizzas.pizza_id
+GROUP BY category
+ORDER BY total_revenue DESC;
+
+Revenue by Day of the Week
+SELECT 
+  TO_CHAR(order_date, 'Day') AS day_of_week,
+  ROUND(SUM(quantity * price), 2) AS total_revenue
+FROM orders
+JOIN order_details ON orders.order_id = order_details.order_id
+JOIN pizzas ON order_details.pizza_id = pizzas.pizza_id
+GROUP BY day_of_week
+ORDER BY total_revenue DESC;
+
+Peak Hours for Sales
+
+SELECT EXTRACT(HOUR FROM order_time) AS hour, 
+       COUNT(*) AS total_orders
+FROM orders
+GROUP BY hour
+ORDER BY total_orders DESC;
+
+Monthly Sales Trend
+
+SELECT DATE_TRUNC('month', order_date) AS month, 
+       SUM(quantity * price) AS monthly_revenue
+FROM orders
+JOIN order_details ON orders.order_id = order_details.order_id
+JOIN pizzas ON order_details.pizza_id = pizzas.pizza_id
+GROUP BY month
+ORDER BY month;
