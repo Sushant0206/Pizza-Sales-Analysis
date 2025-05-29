@@ -58,8 +58,4 @@ Understanding of sales patterns and customer preferences
 
 
 
-Tools
 
-
-
-ChatGPT can make mistakes. Check important info. See Cookie Preferences.
